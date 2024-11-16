@@ -8,7 +8,7 @@ class ModuleWindow;
 //class ModuleConsole;
 class ModuleInputs;
 class ModuleCamera;
-//class ModuleRenderer;
+class ModuleRenderer;
 
 class Application
 {
@@ -17,7 +17,7 @@ public:
 	//ModuleConsole* console;
 	ModuleInputs* inputs;
 	ModuleCamera* camera;
-	//ModuleRenderer* renderer;
+	ModuleRenderer* renderer;
 
 private:
 	Timer ms_timer;

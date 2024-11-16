@@ -5,11 +5,13 @@
 #include "SDL2/SDL.h"
 
 class Application;
-
 bool processEvents();
+
 
 class ModuleWindow : public Module {
 public:
+
+
     ModuleWindow(Application* app, bool start_enabled = true);
     ~ModuleWindow();
 

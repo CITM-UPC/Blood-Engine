@@ -11,5 +11,14 @@
 #include "IL/il.h"
 #include "Windows.h"
 
+//ASSIMP
 
+using namespace std;
+
+#include <vector>
+#include <GL/gl.h>
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <iostream>
 #endif // !__DEFS_H__

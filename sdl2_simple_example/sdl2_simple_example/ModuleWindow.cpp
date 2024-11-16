@@ -1,4 +1,6 @@
 #include "ModuleWindow.h"
+#include "ModuleRenderer.h"
+
 #include "Application.h"
 #include "Globals.h"
 #include "imgui.h"
@@ -121,6 +123,7 @@ void ModuleWindow::SetTitle(const char* title)
 void ModuleWindow::SwapBuffers()
 {
     SDL_GL_SwapWindow(window);
+
 }
 
 bool ModuleWindow::Start() {

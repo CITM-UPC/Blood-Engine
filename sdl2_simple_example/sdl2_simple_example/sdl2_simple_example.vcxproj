@@ -136,7 +136,7 @@
     </ClCompile>
     <ClCompile Include="ModuleInputs.cpp" />
     <ClCompile Include="ModuleRenderer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -152,7 +152,7 @@
     </ClInclude>
     <ClInclude Include="ModuleInputs.h" />
     <ClInclude Include="ModuleRenderer.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Timer.h" />

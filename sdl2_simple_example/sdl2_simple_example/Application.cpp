@@ -5,7 +5,7 @@
 #include "ModuleInputs.h"
 //#include "ModuleConsole.h"
 #include "ModuleCamera.h"
-//#include "ModuleRenderer.h"
+#include "ModuleRenderer.h"
 
 
 
@@ -18,12 +18,12 @@ Application::Application()
 	window = new ModuleWindow(this);
 	inputs = new ModuleInputs(this);
 	camera = new ModuleCamera(this);
-	//renderer = new ModuleRenderer(this);
+	renderer = new ModuleRenderer(this);
 	//console = new ModuleConsole(this);
 	AddModule(window);
 	AddModule(inputs);
 	AddModule(camera);
-	//AddModule(renderer);
+	AddModule(renderer);
 	//AddModule(console);
 }
 

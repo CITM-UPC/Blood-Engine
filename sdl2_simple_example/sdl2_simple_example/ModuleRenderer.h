@@ -2,14 +2,27 @@
 #define __ModuleRenderer_H__
 
 #include "Module.h"
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <vector>
-#include <string>
-#include <glm/glm.hpp>
+#include "Defs.h"
+#include "Application.h"
+#include "Globals.h"
 
-class Application;
+
+#define VERTEX_ATTRIBUTES 3
+
+struct Mesh {
+    uint id_vertex = 0;
+    uint vertexCount = 0;
+    float* vertex = nullptr;
+
+    uint id_index = 0;
+    uint indexCount = 0;
+    uint* index = nullptr;
+
+    uint VBO = 0;//Buffer para los datos de vértices
+    uint EBO = 0;//Buffer para los datos de índices
+
+    void Render();
+};
 
 class ModuleRenderer : public Module {
 public:
@@ -23,29 +36,13 @@ public:
     update_status PostUpdate(float dt) override;
     bool CleanUp() override;
 
-    bool LoadModel(const char* path);
+    void LoadMesh(const char* file_path);//Carga las mallas desde un archivo
+    void ImportMesh(aiMesh* aiMesh);
+    void RenderScene();//Renderiza todas las mallas cargadas
 
 private:
-    struct Vertex {
-        glm::vec3 Position;
-        glm::vec3 Normal;
-        glm::vec2 TexCoords;
-    };
-
-    struct Mesh {
-        std::vector<Vertex> vertices;
-        std::vector<unsigned int> indices;
-        unsigned int VAO, VBO, EBO;
-
-        void SetupMesh();
-        void Draw();
-    };
-
-    std::vector<Mesh> meshes;
-    std::string directory;
-
-    void ProcessNode(aiNode* node, const aiScene* scene);
-    Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+    std::vector<Mesh*> meshList;// Lista de mallas cargadas
+    const char* file_path;// Ruta del archivo de la malla
 };
 
 #endif
