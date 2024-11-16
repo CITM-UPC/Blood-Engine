@@ -18,8 +18,8 @@ struct Mesh {
     uint indexCount = 0;
     uint* index = nullptr;
 
-    uint VBO = 0;//Buffer para los datos de vértices
-    uint EBO = 0;//Buffer para los datos de índices
+    uint VBO = 0;//Buffer Vertex data
+    uint EBO = 0;//Buffer Index data
 
     void Render();
 };
@@ -36,13 +36,13 @@ public:
     update_status PostUpdate(float dt) override;
     bool CleanUp() override;
 
-    void LoadMesh(const char* file_path);//Carga las mallas desde un archivo
+    void LoadMesh(const char* file_path);
     void ImportMesh(aiMesh* aiMesh);
-    void RenderScene();//Renderiza todas las mallas cargadas
+    void RenderScene();
 
 private:
-    std::vector<Mesh*> meshList;// Lista de mallas cargadas
-    const char* file_path;// Ruta del archivo de la malla
+    std::vector<Mesh*> meshList;
+    const char* file_path;
 };
 
 #endif

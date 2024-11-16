@@ -60,7 +60,8 @@ bool ModuleWindow::Init()
         else
         {
             context = SDL_GL_CreateContext(window);
-
+            glewInit();
+            ilInit();
             ImGui::CreateContext();
             ImGui_ImplSDL2_InitForOpenGL(window, context);
             ImGui_ImplOpenGL3_Init("#version 130");
@@ -78,6 +79,7 @@ bool ModuleWindow::Init()
                 glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             }
         }
+
     }
     return ret;
 }
@@ -169,6 +171,65 @@ void DrawGrid() {
 
 update_status ModuleWindow::Update(float dt)
 {
+
+//    ImGui_ImplOpenGL3_NewFrame();
+//    ImGui_ImplSDL2_NewFrame();
+//    ImGui::NewFrame();
+//
+//    if (ImGui::BeginMainMenuBar()) {
+//
+//        if (ImGui::BeginMenu("Menu")) {
+//            if (ImGui::MenuItem("Adeu")) {
+//                SDL_Event quit_event;
+//                quit_event.type = SDL_QUIT;
+//                SDL_PushEvent(&quit_event);
+//            }
+//            ImGui::EndMenu();
+//        }
+//
+//        if (ImGui::BeginMenu("Objects")) 
+//        {
+//
+//            if (ImGui::MenuItem("Create Plane")) 
+//            {
+//
+//            }
+//
+//            if (ImGui::MenuItem("Create Cube")) 
+//            {
+//
+//            }
+//
+//            if (ImGui::MenuItem("Create Sphere")) 
+//            {
+//
+//            }
+//
+//            if (ImGui::MenuItem("Create Pyramid")) 
+//            {
+//
+//            }
+//
+//            ImGui::EndMenu(); 
+//        }
+//
+//        ImGui::EndMainMenuBar();
+//    }
+//
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//    DrawGrid();
+//
+//    ImGui::Render();
+//    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+//
+//    SwapBuffers();
+//
+    return UPDATE_CONTINUE;
+}
+
+update_status ModuleWindow::PostUpdate(float dt) {
+
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
@@ -184,36 +245,35 @@ update_status ModuleWindow::Update(float dt)
             ImGui::EndMenu();
         }
 
-        if (ImGui::BeginMenu("Objects")) 
+        if (ImGui::BeginMenu("Objects"))
         {
 
-            if (ImGui::MenuItem("Create Plane")) 
+            if (ImGui::MenuItem("Create Plane"))
             {
 
             }
 
-            if (ImGui::MenuItem("Create Cube")) 
+            if (ImGui::MenuItem("Create Cube"))
             {
 
             }
 
-            if (ImGui::MenuItem("Create Sphere")) 
+            if (ImGui::MenuItem("Create Sphere"))
             {
 
             }
 
-            if (ImGui::MenuItem("Create Pyramid")) 
+            if (ImGui::MenuItem("Create Pyramid"))
             {
 
             }
 
-            ImGui::EndMenu(); 
+            ImGui::EndMenu();
         }
 
         ImGui::EndMainMenuBar();
     }
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     DrawGrid();
 
@@ -223,8 +283,4 @@ update_status ModuleWindow::Update(float dt)
     SwapBuffers();
 
     return UPDATE_CONTINUE;
-}
-
-update_status ModuleWindow::PostUpdate(float dt) {
-    return UPDATE_CONTINUE; 
 }

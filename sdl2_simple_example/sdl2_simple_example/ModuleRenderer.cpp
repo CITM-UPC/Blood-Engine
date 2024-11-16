@@ -11,8 +11,6 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-// Definición del número de atributos de vértices
-#define VERTEX_ATTRIBUTES 3
 
 ModuleRenderer::ModuleRenderer(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
@@ -21,26 +19,14 @@ ModuleRenderer::~ModuleRenderer() {
 }
 
 bool ModuleRenderer::Init() {
-    // Inicialización de OpenGL, DevIL, etc.
-    // En algún lugar de tu código (por ejemplo, en Init() o Start())
-    glewInit();
-    if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(0.5, 0.5, 0.5, 1.0);
-    ilInit();
 
-    //if (glewInit() != GLEW_OK) {
-    //    std::cerr << "Error al inicializar GLEW!" << std::endl;
-    //    return false; // O algún manejo de error adecuado
-    //}
-    //return true;
+    return true;
 
 }
 
 bool ModuleRenderer::Start() {
-    // Aquí puedes cargar tu malla desde el archivo
-    std::cerr << "Inicio de Start()" << std::endl;  // Diagnóstico adicional
-
+    //Debug PATH (PQ NO CARGA?)
+    /*
     const char* rutaRelativa = "Assets/BakerHouse.fbx"; // tu ruta relativa
     char rutaAbsoluta[_MAX_PATH];
     if (_fullpath(rutaAbsoluta, rutaRelativa, _MAX_PATH) != nullptr) {
@@ -49,11 +35,8 @@ bool ModuleRenderer::Start() {
     else {
         std::cerr << "Error al convertir la ruta." << std::endl;
     }
-
-
-    LoadMesh("Assets/BakerHouse.fbx");  // Llama a LoadMesh al inicio
-    //Debug PATH (PQ NO CARGA?)
-
+    */
+    LoadMesh("Assets/BakerHouse.fbx");
 
     return true;
 }
@@ -64,16 +47,17 @@ update_status ModuleRenderer::PreUpdate(float dt) {
 
 update_status ModuleRenderer::Update(float dt) {
     // Renderizamos la escena en cada actualización
+
     return UPDATE_CONTINUE;
 }
 
 update_status ModuleRenderer::PostUpdate(float dt) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     RenderScene();
     return UPDATE_CONTINUE;
 }
 
 bool ModuleRenderer::CleanUp() {
-    // Limpiamos todos los recursos utilizados (mallas, buffers, etc.)
     for (Mesh* mesh : meshList) {
         delete[] mesh->vertex;
         delete[] mesh->index;
@@ -84,9 +68,9 @@ bool ModuleRenderer::CleanUp() {
 }
 
 void ModuleRenderer::RenderScene() {
-    // Renderizamos todas las mallas en la lista
-    for (Mesh* mesh : meshList) {
-        mesh->Render();
+    //Renderizamos mesh recorriendo todas las mallas de meshList
+    for (int i = 0; i < meshList.size(); i++) {
+        meshList[i]->Render();
     }
 }
 
@@ -116,24 +100,12 @@ void ModuleRenderer::LoadMesh(const char* file_path) {
 void  ModuleRenderer::ImportMesh(aiMesh* aiMesh)
 {
     Mesh* currentMesh = new Mesh();
-    //DEBUG
-    if (currentMesh == nullptr) {
-        std::cerr << "Error: No se pudo asignar memoria para currentMesh." << std::endl;
-        return;
-    }
-    //DEBUG
+
     //Guardando numero de vertices desde malla ASSIMP
     currentMesh->vertexCount = aiMesh->mNumVertices;
 
     //Reservamos memoria para vertices ( 3 componentes , de momento)
     currentMesh->vertex = new float[currentMesh->vertexCount * 3];
-    //DEBUG
-    if (currentMesh->vertex == nullptr) {
-        std::cerr << "Error: No se pudo asignar memoria para los vértices." << std::endl;
-        delete currentMesh;
-        return;
-    }
-    //DEBUG
     memcpy(currentMesh->vertex, aiMesh->mVertices, sizeof(float) * currentMesh->vertexCount * 3);
 
     // Si tiene caras, cargamos caras
@@ -141,14 +113,7 @@ void  ModuleRenderer::ImportMesh(aiMesh* aiMesh)
     {
         currentMesh->indexCount = aiMesh->mNumFaces * 3;
         currentMesh->index = new uint[currentMesh->indexCount];
-        //DEBUG
-        if (currentMesh->index == nullptr) {
-            std::cerr << "Error: No se pudo asignar memoria para los índices." << std::endl;
-            delete[] currentMesh->vertex;
-            delete currentMesh;
-            return;
-        }
-        //DEBUG
+
         for (uint i = 0; i < aiMesh->mNumFaces; ++i)
         {
             if (aiMesh->mFaces[i].mNumIndices == 3)
@@ -168,14 +133,6 @@ void  ModuleRenderer::ImportMesh(aiMesh* aiMesh)
         //Generando Buffers de vértices e índices
         glGenBuffers(1, &currentMesh->VBO);
         glGenBuffers(1, &currentMesh->EBO);
-
-        if (currentMesh->VBO == 0 || currentMesh->EBO == 0) {
-            std::cerr << "Error al generar los buffers de OpenGL." << std::endl;
-            delete[] currentMesh->vertex;
-            delete[] currentMesh->index;
-            delete currentMesh;
-            return;
-        }
 
         //Bindeando y rellenando Buffers
         glBindBuffer(GL_ARRAY_BUFFER, currentMesh->VBO);
@@ -200,10 +157,13 @@ void Mesh::Render() {
 
     glEnableClientState(GL_VERTEX_ARRAY);
 
+    //Vinculamos Buffers otra vez
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
     glVertexPointer(3, GL_FLOAT, 0, NULL);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
+    //Dibujar
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
 
     glDisableClientState(GL_VERTEX_ARRAY);
