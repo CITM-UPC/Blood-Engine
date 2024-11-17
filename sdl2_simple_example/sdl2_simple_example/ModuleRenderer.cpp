@@ -46,8 +46,6 @@ update_status ModuleRenderer::PreUpdate(float dt) {
 }
 
 update_status ModuleRenderer::Update(float dt) {
-    // Renderizamos la escena en cada actualización
-
     return UPDATE_CONTINUE;
 }
 
@@ -69,8 +67,16 @@ bool ModuleRenderer::CleanUp() {
 
 void ModuleRenderer::RenderScene() {
     //Renderizamos mesh recorriendo todas las mallas de meshList
+
     for (int i = 0; i < meshList.size(); i++) {
+        glPushMatrix(); // Guardar la matriz actual
+
+        // Aplicar traslación a la posición fija de la malla
+        glTranslatef(meshList[i]->position.x, 0.0f, meshList[i]->position.z);
+
         meshList[i]->Render();
+        glPopMatrix(); // Restaurar la matriz original
+
     }
 }
 
@@ -88,8 +94,6 @@ void ModuleRenderer::LoadMesh(const char* file_path) {
             ImportMesh(currentScene->mMeshes[i]);
         }
         aiReleaseImport(currentScene);
-        std::cerr << "Hola" << std::endl;
-
     }
     else
     {
@@ -139,6 +143,13 @@ void  ModuleRenderer::ImportMesh(aiMesh* aiMesh)
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * currentMesh->vertexCount * VERTEX_ATTRIBUTES, currentMesh->vertex, GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currentMesh->EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * currentMesh->indexCount, currentMesh->index, GL_STATIC_DRAW);
+
+        //Posicion Random para que no se solapen los meshes al hacer Drag&Drop
+        currentMesh->position = glm::vec3(
+            static_cast<float>(rand() % 10 - 5), // Rango [-5, 5]
+            static_cast<float>(rand() % 10 - 5),
+            static_cast<float>(rand() % 10 - 5)
+        );
 
         //Mesh añadida al vector que contiene las meshes
         meshList.push_back(currentMesh);

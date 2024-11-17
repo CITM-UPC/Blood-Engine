@@ -21,8 +21,9 @@ Application::Application()
 	renderer = new ModuleRenderer(this);
 	//console = new ModuleConsole(this);
 	AddModule(window);
-	AddModule(inputs);
 	AddModule(camera);
+	AddModule(inputs);
+
 	AddModule(renderer);
 	//AddModule(console);
 }

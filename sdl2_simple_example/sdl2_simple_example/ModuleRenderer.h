@@ -21,6 +21,8 @@ struct Mesh {
     uint VBO = 0;//Buffer Vertex data
     uint EBO = 0;//Buffer Index data
 
+    glm::vec3 position;
+
     void Render();
 };
 

@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 #include <SDL2/SDL.h>
+#include <iostream>
+#include "ModuleWindow.h"
 
 #define MAX_KEYS 200  
 #define MAX_BUTTONS 5
@@ -40,4 +42,6 @@ private:
     KEY_STATE mbutton[MAX_BUTTONS];
     int mousex, mousey, mousez;
     int mousexmotion, mouseymotion;
+    char* dropped_file_path;
+    std::string dropped_file_path_str;
 };

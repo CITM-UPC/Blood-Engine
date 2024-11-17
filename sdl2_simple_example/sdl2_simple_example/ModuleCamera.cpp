@@ -51,22 +51,22 @@ void ModuleCamera::CameraInput(float dt) {
     // Movimiento hacia adelante y atrás
     if (keys[SDL_SCANCODE_W]) {
         position += front * speed * dt;
-        SDL_Log("pulsas w");
+        //SDL_Log("pulsas w");
     }
     if (keys[SDL_SCANCODE_S]) {
         position -= front * speed * dt;
-        SDL_Log("pulsas s");
+        //SDL_Log("pulsas s");
     }
 
     // Movimiento hacia los lados
     glm::vec3 right = glm::normalize(glm::cross(front, up));
     if (keys[SDL_SCANCODE_A]) {
         position -= right * speed * dt;
-        SDL_Log("pulsas a");
+        //SDL_Log("pulsas a");
     }
     if (keys[SDL_SCANCODE_D]) {
         position += right * speed * dt;
-        SDL_Log("pulsas d");
+        //SDL_Log("pulsas d");
     }
 
     int mouseMotionX, mouseMotionY;
