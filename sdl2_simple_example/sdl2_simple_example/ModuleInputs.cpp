@@ -96,15 +96,6 @@ update_status ModuleInputs::PreUpdate(float dt)
             break;
 
             //Drag & Drop
-        case SDL_WINDOWEVENT:
-            if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
-                std::cerr << "Ventana ganó el foco." << std::endl;
-            }
-            if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
-                std::cerr << "Ventana perdió el foco." << std::endl;
-            }
-            break;
-
         case SDL_DROPFILE:
             dropped_file_path = event.drop.file;
             dropped_file_path_str = event.drop.file;

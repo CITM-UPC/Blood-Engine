@@ -21,8 +21,10 @@ struct Mesh {
     uint VBO = 0;//Buffer Vertex data
     uint EBO = 0;//Buffer Index data
 
-    bool apply_random_translation = true;//Provisional unicamente para poder mostrar el Drag&Drop
+    //Provisional unicamente para poder mostrar el Drag&Drop
+    bool apply_random_translation = true;
     glm::vec3 position;
+    //
 
     void Render();
 };

@@ -66,17 +66,14 @@ bool ModuleRenderer::CleanUp() {
 }
 
 void ModuleRenderer::RenderScene() {
-    //Renderizamos mesh recorriendo todas las mallas de meshList
-
     for (int i = 0; i < meshList.size(); i++) {
-        glPushMatrix(); // Guardar la matriz actual
+        glPushMatrix();
 
-        // Aplicar traslación a la posición fija de la malla
+        // Aplicar traslación
         glTranslatef(meshList[i]->position.x, 0.0f, meshList[i]->position.z);
 
         meshList[i]->Render();
-        glPopMatrix(); // Restaurar la matriz original
-
+        glPopMatrix();
     }
 }
 
