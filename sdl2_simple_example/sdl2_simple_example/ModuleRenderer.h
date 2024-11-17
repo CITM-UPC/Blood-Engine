@@ -21,6 +21,7 @@ struct Mesh {
     uint VBO = 0;//Buffer Vertex data
     uint EBO = 0;//Buffer Index data
 
+    bool apply_random_translation = true;//Provisional unicamente para poder mostrar el Drag&Drop
     glm::vec3 position;
 
     void Render();
@@ -38,8 +39,8 @@ public:
     update_status PostUpdate(float dt) override;
     bool CleanUp() override;
 
-    void LoadMesh(const char* file_path);
-    void ImportMesh(aiMesh* aiMesh);
+    void LoadMesh(const char* file_path, bool apply_random_translation = true);
+    void ImportMesh(aiMesh* aiMesh, bool apply_random_translation = true);
     void RenderScene();
 
 private:

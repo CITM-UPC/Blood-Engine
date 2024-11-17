@@ -36,7 +36,7 @@ bool ModuleRenderer::Start() {
         std::cerr << "Error al convertir la ruta." << std::endl;
     }
     */
-    LoadMesh("Assets/BakerHouse.fbx");
+    LoadMesh("Assets/BakerHouse.fbx",false);
 
     return true;
 }
@@ -80,7 +80,7 @@ void ModuleRenderer::RenderScene() {
     }
 }
 
-void ModuleRenderer::LoadMesh(const char* file_path) {
+void ModuleRenderer::LoadMesh(const char* file_path, bool apply_random_translation) {
 
     const aiScene* currentScene = aiImportFile(file_path, aiProcess_Triangulate);
 
@@ -91,7 +91,7 @@ void ModuleRenderer::LoadMesh(const char* file_path) {
 
         for (int i = 0; i < currentScene->mNumMeshes; i++)
         {
-            ImportMesh(currentScene->mMeshes[i]);
+            ImportMesh(currentScene->mMeshes[i],apply_random_translation);
         }
         aiReleaseImport(currentScene);
     }
@@ -101,7 +101,7 @@ void ModuleRenderer::LoadMesh(const char* file_path) {
     }
 }
 
-void  ModuleRenderer::ImportMesh(aiMesh* aiMesh)
+void  ModuleRenderer::ImportMesh(aiMesh* aiMesh, bool apply_random_translation)
 {
     Mesh* currentMesh = new Mesh();
 
@@ -144,12 +144,14 @@ void  ModuleRenderer::ImportMesh(aiMesh* aiMesh)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currentMesh->EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * currentMesh->indexCount, currentMesh->index, GL_STATIC_DRAW);
 
-        //Posicion Random para que no se solapen los meshes al hacer Drag&Drop
-        currentMesh->position = glm::vec3(
-            static_cast<float>(rand() % 10 - 5), // Rango [-5, 5]
-            static_cast<float>(rand() % 10 - 5),
-            static_cast<float>(rand() % 10 - 5)
-        );
+        //Creado Unicamente para mostrar el Drag&Drop
+        if (apply_random_translation) {
+            currentMesh->position = glm::vec3(static_cast<float>(rand() % 10 - 5),0.0f,static_cast<float>(rand() % 10 - 5)
+            );
+        }
+        else {
+            currentMesh->position = glm::vec3(0.0f, 0.0f, 0.0f);
+        }
 
         //Mesh añadida al vector que contiene las meshes
         meshList.push_back(currentMesh);

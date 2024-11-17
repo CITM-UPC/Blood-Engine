@@ -114,7 +114,7 @@ update_status ModuleInputs::PreUpdate(float dt)
             if (extension == "FBX" || extension == "fbx")
             {
                 std::cout << "Loading FBX" << std::endl;
-                App->renderer->LoadMesh(dropped_file_path);
+                App->renderer->LoadMesh(dropped_file_path, true);
             }
             SDL_free(dropped_file_path);
             break;
