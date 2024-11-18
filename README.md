@@ -10,5 +10,5 @@ Made by: Hugo Castaño, Sergio Corona and Bernat Cifuentes
 * [Sergio Corona](https://github.com/seregero00)
 * [Bernat Cifuentes](https://github.com/ItsBernii)
 
-Our GitHub project: [Blood Engine](https://github.com/LazyRacoonDev/BloodEngine)
+Our GitHub project: [Blood Engine](https://github.com/CITM-UPC/Blood-Engine)
 
